@@ -7,12 +7,17 @@ export default function LivroDados() {
   const controleEditora = new ControleEditora(editorasMock);
   const controleLivro = new ControleLivro(livrosMock);
 
-  const opcoes = controleEditora.getEditoras();
+  const opcoes = controleEditora.getEditoras().map((editora) => {
+    return {
+      value: editora.codEditora,
+      text: editora.nome,
+    };
+  });
 
   const [titulo, setTitulo] = useState("");
   const [resumo, setResumo] = useState("");
   const [autores, setAutores] = useState("");
-  const [codEditora, setCodEditora] = useState(opcoes[0].codEditora);
+  const [codEditora, setCodEditora] = useState(opcoes[0].value);
 
   const navigate = useNavigate();
 
@@ -64,8 +69,8 @@ export default function LivroDados() {
             onChange={tratarCombo}
           >
             {opcoes.map((opcao) => (
-              <option key={opcao.codEditora} value={opcao.codEditora}>
-                {opcao.nome}
+              <option key={opcao.value} value={opcao.value}>
+                {opcao.text}
               </option>
             ))}
           </select>
